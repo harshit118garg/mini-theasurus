@@ -1,0 +1,10 @@
+.input-container {
+  position: relative;
+  display: inline-block;
+
+  .search-icon {
+    position: absolute;
+    top: 26%;
+    left: 0.75rem;
+  }
+}
