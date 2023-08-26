@@ -5,11 +5,13 @@ import {
   theasurusContainerClasses,
   inputClasses,
   relatedWordsClasses,
-  boxClasses,
 } from "./classes/articleClasses";
+import { Synonyms } from "./components-sub/Synonyms";
+import { Antonymns } from "./components-sub/Antonymns";
 
 export const Article = () => {
-  const [inputFocussed, setInputFocussed] = useState(false);
+  const [inputFocussed, setInputFocussed] = useState<boolean>(false);
+  const [queryWord, setQueryWord] = useState<string>("");
 
   const handleFocus = () => {
     setInputFocussed(true);
@@ -17,6 +19,10 @@ export const Article = () => {
 
   const handleBlur = () => {
     setInputFocussed(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQueryWord(e.target.value);
   };
 
   return (
@@ -27,6 +33,8 @@ export const Article = () => {
             <input
               name="word"
               className={inputClasses}
+              value={queryWord}
+              onChange={handleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
               placeholder={inputFocussed ? "" : "Enter Word"}
@@ -35,20 +43,12 @@ export const Article = () => {
               <BsSearch />
             </span>
           </div>
-          <div className={relatedWordsClasses}>
-            <div className={`synonyms ${boxClasses} bg-white`}>
-              <p className="text-xl max-[768px]:text-base">
-                The quick brown fox ...
-              </p>
+          {queryWord && (
+            <div className={relatedWordsClasses}>
+              <Synonyms queryWord={queryWord} />
+              <Antonymns queryWord={queryWord} />
             </div>
-            <div
-              className={`antonyms ${boxClasses} bg-slate-700 text-slate-50`}
-            >
-              <p className="text-xl max-[768px]:text-base">
-                The quick brown fox ...
-              </p>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>
